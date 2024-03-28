@@ -2,7 +2,6 @@
 #include <fcntl.h>
 #include <stdio.h>
 #include <unistd.h>
-#include <sys/stat.h>
 #include <dirent.h>
 
 using namespace std;
