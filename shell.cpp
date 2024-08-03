@@ -3,8 +3,8 @@
 #include <vector>
 #include <sys/wait.h>
 
-
-void process_command(std::string command, std::vector<std::string> history) {
+static std::vector<std::string> history;
+void process_command(std::string command) {
     // Se for comando interno...
     if (command == "exit") exit(0);
     else if (command == "pwd"){
@@ -13,13 +13,14 @@ void process_command(std::string command, std::vector<std::string> history) {
     }
     else if (command.find("history") != -1){
         if(command.find(" -c") != -1) history.clear();
+        else if(command.find(" ") != -1) process_command(history[history.size() - 1 - stoi(command.substr(command.find(" ") + 1, command.size() - 1))]);
         else{
-            int size = history.size();
+            int size = history.size() - 1;
             if(size >= 10){
-                for(int i = 9; i > 0; --i) std::cout << i << " " << history[size - i - 1] << std::endl;
+                for(int i = 9; i >= 0; --i) std::cout << i << " " << history[size - i] << std::endl;
             }
             else{
-                for(int i = size - 1; i > 0; --i) std::cout << i << " " << history[size - i] << std::endl;
+                for(int i = size; i >= 0; --i) std::cout << i << " " << history[size - i] << std::endl;
             }
         }
     }
@@ -31,9 +32,11 @@ void process_command(std::string command, std::vector<std::string> history) {
         Se for absoluto verifica se comando existe
     */
     else{
-        std::string absolute_path = command.find(" ") != -1 ? "/mnt/c/Users/alves/OneDrive - IFRN/S.O/" + command.substr(0, command.find(" ")) : "/mnt/c/Users/alves/OneDrive - IFRN/S.O/" + command;
+        std::string absolute_path = command.find(" ") != -1 ? get_current_dir_name() + '/' + command.substr(0, command.find(" ")) : get_current_dir_name() + '/' + command;
+        std::cout << absolute_path << std::endl;
         if (access(absolute_path.c_str(), F_OK) == 0) { // Arquivo existe no diretório
             if (access(absolute_path.c_str(), X_OK) == 0) { // Arquivo é executável
+                history.push_back(command);
                 pid_t pid = fork();
                 if (pid < 0){ // Erro
                     std::cout << "Erro de execução!" << std::endl;
@@ -46,7 +49,6 @@ void process_command(std::string command, std::vector<std::string> history) {
                         command_copy = command_copy.substr(command_copy.find(" ") + 1, command_copy.size() - 1);
                     }
                     char * argv[params+2] = {(char *)command.c_str()};
-                    history.push_back(command);
                     if(command.find(" ") != -1){
                         for(int i = 1; i <= params; ++i){
                             command = command.substr(command.find(" ") + 1, command.size() - 1);
@@ -54,7 +56,6 @@ void process_command(std::string command, std::vector<std::string> history) {
                         }
                     }
                     argv[params + 2 - 1] = nullptr;
-
                     execve(absolute_path.c_str(), argv, NULL);
                 } else { // Processo pai
                     /* Deve adicionar processo filho na lista (std::vector) 
@@ -70,13 +71,11 @@ void process_command(std::string command, std::vector<std::string> history) {
 }
 
 int main() {
-    std::vector<std::string> history;
     while (true) {
         std::cout << "$> ";
         std::string command;
         getline(std::cin, command);
-        process_command(command, history);
-        std::cout << history.size() << std::endl;
+        process_command(command);
     }
     return 0;
 }
