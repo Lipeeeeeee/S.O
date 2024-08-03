@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-<center>S.O</center><br><br>
-
-Aqui armazenarei alguns dos métodos de chamada de sistema, para a atividade da matéria de Sistemas Operacionais
-=======
 &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;S.O<br>
 
 &emsp;&emsp;&emsp;&emsp;Aqui armazenarei alguns dos métodos de chamada de sistema, para a atividade da matéria de Sistemas Operacionais<br><br>
@@ -18,4 +13,3 @@ Aqui armazenarei alguns dos métodos de chamada de sistema, para a atividade da 
 [rmdir](https://github.com/Lipeeeeeee/S.O/blob/main/rmdir.cpp) - remove o diretório esecificado, somente se estiver vazio<br><br>
 [chmod](https://github.com/Lipeeeeeee/S.O/blob/main/chmod.cpp) - altera as permissões de um arquivo especificado<br><br>
 [chown](https://github.com/Lipeeeeeee/S.O/blob/main/chown.cpp) - altera o proprietário de um arquivo especificado<br><br>
->>>>>>> e4f51742789ae5520e90f8166663228d1a8ba03c
