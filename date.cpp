@@ -1,16 +1,3 @@
-<<<<<<< HEAD
-#include <time.h>
-#include <iostream>
-
-using namespace std;
-
-int main(){
-    int h = time(NULL) / 3600 % 24 - 3;
-    h = h < 0 ? 24 + h : h;
-    int m = time(NULL) / 60 % 60;
-    cout << h << ':' << m << endl;
-}
-=======
 #include <time.h> // recuperação de tempo atual
 #include <iostream> // saída de dados
 
@@ -22,4 +9,3 @@ int main(){
     int m = time(NULL) / 60 % 60; // minutos recuperados
     cout << h << ':' << m << endl; // mostra a hora e minutos atuais
 }
->>>>>>> e4f51742789ae5520e90f8166663228d1a8ba03c
